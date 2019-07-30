@@ -72,7 +72,7 @@ let app = new Vue({
 			let code = user.barcode;
 			JsBarcode("#"+id, code, {width: 4});
 			let svg = document.getElementById(id);
-			svg.style.display = "block";
+			svg.classList.toggle("visible");
 		}
 	}
 });
