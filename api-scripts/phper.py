@@ -24,7 +24,7 @@ with open('promocje.csv', newline='', encoding='utf-8') as csvfile:
 promki = sorted(promki, key=lambda x: x[3])
 for p in promki:
 	main += template.format(
-		p[1], p[2], p[3],p[4], p[6], p[7], p[0]
+		p[1], p[2], p[3],p[4], p[7], p[6], p[0]
 	)
 
 with open('promotions.php','w', encoding='utf-8') as fff:
