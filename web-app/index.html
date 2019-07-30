@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Żabka x Maciej</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="vue.js"></script>
+	<script src="axios.min.js"></script>
+	<script src="JsBarcode.code128.min.js"></script>
+</head>
+<body>
+	<div id="zabka-app">
+		<div class="header">
+			Maciej Kaszkowiak bogiem<br>
+			a Żabka nałogiem
+		</div>
+		<div v-if="view == 'login'" class="login">
+			<input type="text" placeholder="Podaj hasło" v-model="secret" class="login__secret">
+			<button class="login__submit" @click="getPromotions">
+				Pobierz promocje
+			</button>
+		</div>
+
+		<div v-if="view == 'promotions'" class="promotions">
+			<img v-for="(promo, thumb) in promotions" class="promotion-thumbnail" :src="thumb" @click="selectPromotion(promo)">
+		</div>
+
+		<div v-if="view == 'promo'" class="promo">
+			<button @click="view = 'promotions'" class="promo-back">
+				WRÓĆ
+			</button>
+			<br>
+			<img class="promo-img" :src="promo[0].thumbnail">
+			{{promo[0].name}}<br>
+			{{promo[0].price}} groszy<br>
+			<div v-for="user in promo" class="promo-user" @click="showBarcode(user)">
+				<div class="promo-email">
+					{{user.email}}
+				</div>
+				<svg :id="'barcode'+user.barcode" class="promo-barcode"></svg>
+			</div>
+
+		</div>
+	</div>
+<script src="main.js"></script>
+</body>
+</html>

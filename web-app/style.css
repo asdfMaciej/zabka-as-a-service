@@ -1,0 +1,48 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.promotion-thumbnail {
+	width: 100px;
+	height: 100px;
+}
+
+.promo-user {
+	padding: 12px;
+}
+
+.promo-user:nth-child(2n) {
+	background: #eeeeee;
+}
+
+.promo-img {
+	width: 100px;
+	height: 100px;
+}
+
+.promo-back {
+	padding: 24px;
+	background: #eee;
+	font-size: 2em;
+	border: 1px solid black;
+}
+
+.promo-barcode {
+	display: none;
+	width: calc(100vw - 24px);
+}
+
+.login__secret, .login__submit {
+	display: block;
+	width: 100vw;,
+	padding: 12px;
+	font-size: 1.2em;
+	margin-bottom: 8px;
+}
+
+.header {
+	text-align: center;
+	padding: 12px;
+}
