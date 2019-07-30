@@ -1,6 +1,6 @@
 class Zabkonator {
 	constructor() {
-		this.path = "http://kaszkowiak.org/api/";
+		this.path = "../api/";
 		this.request = axios.create({
 			baseURL: this.path
 		});
