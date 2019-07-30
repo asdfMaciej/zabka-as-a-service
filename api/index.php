@@ -1,7 +1,7 @@
 <?php
 require_once "env.php";
 
-if (SECRET !== $_GET["secret"]) {
+if (SECRET != $_GET["secret"]) {
 	http_response_code(401);
 	die();
 }
