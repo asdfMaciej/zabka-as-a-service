@@ -9,6 +9,6 @@ if (strtolower(SECRET) != strtolower($_GET["secret"])) {
 require_once "promotions.php";
 http_response_code(200);
 header("Content-Type: application/json");
-$response = ["promotions" => $promotions];
+$response = ["date" => $datetime, "promotions" => $promotions];
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
 ?>

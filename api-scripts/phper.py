@@ -1,9 +1,13 @@
 import csv
+from datetime import datetime
 
 header = """
 <?php
 $promotions = [];
 """
+
+header += '$datetime = "'+str(datetime.now())+'";\n';
+
 template = """
 $p = [];
 $p["barcode"] = "{}";

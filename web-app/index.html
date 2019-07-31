@@ -23,6 +23,7 @@
 		</div>
 
 		<div v-if="view == 'promotions'" class="promotions">
+			<h3>{{date}}</h3>
 			<img v-for="(promo, thumb) in promotions" class="promotion-thumbnail" :src="thumb" @click="selectPromotion(promo)">
 		</div>
 
@@ -36,7 +37,7 @@
 			{{promo[0].price}} groszy<br>
 			<div v-for="user in promo" class="promo-user" @click="showBarcode(user)">
 				<div class="promo-email">
-					{{user.email}}
+					{{user.email}} - {{user.timeout}}
 				</div>
 				<svg :id="'barcode'+user.barcode" class="promo-barcode"></svg>
 			</div>

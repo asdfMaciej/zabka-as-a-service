@@ -12,7 +12,7 @@ class Zabkonator {
 		};
 		this.request.get("/", {params: params, crossdomain: true})
 			.then(response => {
-				success(response.data.promotions);
+				success(response.data);
 			})
 			.catch(error => {
 				fail()
@@ -27,7 +27,8 @@ let app = new Vue({
 		secret: "",
 		api: null,
 		promotions: [],
-		promo: {}
+		promo: {},
+		date: ""
 	},
 
 	created: function() {
@@ -38,7 +39,8 @@ let app = new Vue({
 		getPromotions: function() {
 			this.api.getPromotions(this.secret,
 				promos => {
-					this.setPromotions(promos);
+					this.setPromotions(promos.promotions);
+					this.date = promos.date;
 					this.view = "promotions"; 
 				},
 				fail => {
