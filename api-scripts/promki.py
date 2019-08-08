@@ -5,12 +5,12 @@ import csv
 
 url = "https://api.synerise.com/v4/auth/login/client"
 api = "<provide an api key>"
-uuid = "<provide an uuid>"
+uuid = "<provide an uuid - randomly generate one, it'll work>"
 
 headers = {
 	"Accept": "application/json",
 	"Content-Type": "application/json",
-	"Api-Version": "4.3"
+	"Api-Version": "4.4"
 }
 
 hotdogi_boze = [
@@ -24,33 +24,54 @@ with open("tokens", "r") as tf:
 		email = data[1].strip()
 		token = data[0].strip()
 
-		url_get = "https://api.synerise.com/v4/promotions/promotion/get-for-client"
+		url_get = "https://api.synerise.com/v4/promotions/promotion/get-for-client?status=ASSIGNED&page="
 		headers["Authorization"] = "Bearer "+token
 
-		r = requests.get(url_get, headers=headers)
-		promki = r.json()['data']
+		pages = [1]
+		for currentPage in pages:
+			r = requests.get(url_get+str(currentPage), headers=headers)
+			promki = r.json()['data']
 
-		towar = []
-		print("[*] "+email)
-		with open("test/"+email, "w", encoding="utf-8") as ffff:
-			ffff.write(str(promki))
+			if len(promki) == 100:
+				pages.append(currentPage+1)
 
-		for promka in promki:
-			if promka['params']:
-				if "countdown" in promka['params']:
-					towar.append(promka)
+			towar = []
+			print("[*] "+email+", page: "+str(currentPage))
 
-		for hotdog in towar:
-			hajs = str(int(float(hotdog['discountValue'])*100))
-			dzieciateczko_z_nazaretu = [
-				email, barcode, hotdog['params']['countdown'],
-				hotdog['name'], hajs, 
-				hotdog['description'].replace('\n', ' '),
-				hotdog['images'][0]['url'],
-				hotdog['images'][1]['url']
-			]
+			for promka in promki:
+				if promka['params']:
+					if "countdown" in promka['params']:
+						towar.append(promka)
 
-			hotdogi_boze.append(dzieciateczko_z_nazaretu)
+			for hotdog in towar:
+				#hajs = str(int(float(hotdog['discountValue'])*100))
+				hajs = str(hotdog['price'])
+
+				img_big = ""
+				img_thumbnail = ""
+
+				for img in hotdog['images']:
+					if img['type'] == 'image':
+						img_big = img['url']
+
+					if img['type'] == 'thumbnail':
+						img_thumbnail = img['url']
+
+				if img_big and not img_thumbnail:
+					img_thumbnail = img_big
+
+				if img_thumbnail and not img_big:
+					img_big = img_thumbnail
+
+
+				dzieciateczko_z_nazaretu = [
+					email, barcode, hotdog['params']['countdown'],
+					hotdog['name'], hajs, 
+					hotdog['description'].replace('\n', ' '),
+					img_big, img_thumbnail
+				]
+
+				hotdogi_boze.append(dzieciateczko_z_nazaretu)
 
 		print("\n")
 
